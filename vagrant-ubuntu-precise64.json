@@ -1,0 +1,65 @@
+{
+  "builders": [
+    {
+      "boot_command": [
+        "<esc><esc><enter><wait>",
+        "/install/vmlinuz noapic ",
+        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
+        "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
+        "hostname={{ .Name }} ",
+        "fb=false debconf/frontend=noninteractive ",
+        "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
+        "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
+        "initrd=/install/initrd.gz -- <enter>"
+      ],
+      "boot_wait": "4s",
+      "guest_os_type": "Ubuntu_64",
+      "http_directory": "http",
+      "iso_checksum": "e83adb9af4ec0a039e6a5c6e145a34de",
+      "iso_checksum_type": "md5",
+      "iso_url": "D:/packer/ubuntu-12.04.4-server-amd64.iso",
+      "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
+      "ssh_password": "vagrant",
+      "ssh_username": "vagrant",
+      "ssh_wait_timeout": "20m",
+      "type": "virtualbox-iso",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "1024"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "2"
+        ]
+      ],
+      "virtualbox_version_file": ".vbox_version",
+      "vm_name": "precise64"
+    }
+  ],
+  "post-processors": [
+    {
+      "output": "precise64.box",
+      "type": "vagrant"
+    }
+  ],
+  "provisioners": [
+    {
+      "execute_command": "echo 'vagrant' | sudo -S sh '{{ .Path }}'",
+      "scripts": [
+        "scripts/vagrant-user.sh",
+        "scripts/vagrant-ubuntu-update.sh",
+        "scripts/vagrant-ubuntu.sh",
+        "scripts/vagrant-sshkey.sh",
+        "scripts/ubuntu-bootstrap-puppet.sh",
+        "scripts/virtualbox-guest-additions.sh"
+      ],
+      "type": "shell"
+    }
+  ]
+}
+
