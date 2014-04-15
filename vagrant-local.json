@@ -43,7 +43,7 @@
   ],
   "post-processors": [
     {
-      "output": "precise64.box",
+      "output": "build/local.box",
       "type": "vagrant"
     }
   ],
@@ -56,6 +56,7 @@
         "scripts/vagrant-ubuntu.sh",
         "scripts/vagrant-sshkey.sh",
         "scripts/ubuntu-bootstrap-puppet.sh",
+        "scripts/ubuntu-mongodb.sh",
         "scripts/virtualbox-guest-additions.sh"
       ],
       "type": "shell"
