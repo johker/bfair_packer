@@ -11,7 +11,7 @@ MongoDB and Puppet are provided by shell scripts. The following templates are co
 
 
 Production
- ----
+----
  
  Starts AWS deployment: 
  
