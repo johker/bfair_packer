@@ -35,6 +35,7 @@
       "type": "puppet-masterless",
    	  "manifest_file": "../bfair_vagrant_puppet/puppet/manifests/bfair.pp",
       "manifest_dir":  "../bfair_vagrant_puppet/puppet/manifests",
+	  "module_paths": ["../bfair_vagrant_puppet/puppet/modules"],
       "hiera_config_path": "../bfair_vagrant_puppet/puppet/hiera.yaml"
 	}
     
