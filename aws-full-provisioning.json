@@ -1,0 +1,43 @@
+{
+	
+	"variables": {
+	    "aws_access_key": "",
+	    "aws_secret_key": ""
+	},
+  "builders": [
+   
+    {
+    	  "type": "amazon-ebs",
+    	  "access_key": "{{user `aws_access_key`}}",
+    	  "secret_key": "{{user `aws_secret_key`}}",
+    	  "region": "eu-west-1",
+    	  "source_ami": "ami-cd6c97ba",
+    	  "instance_type": "t1.micro",
+    	  "ssh_username": "ubuntu",
+    	  "ami_name": "bfair-packer-aws {{timestamp}}",
+    	  "tags": {
+    	    "OS_Version": "Ubuntu",
+    	    "Release": "Latest"
+    	  }
+    	}
+  ],
+  "provisioners": [
+     {
+    	 "execute_command": "echo 'vagrant' | sudo -S sh '{{ .Path }}'",
+    	 "scripts": [
+         "scripts/vagrant-ubuntu-update.sh",
+         "scripts/ubuntu-mongodb.sh", 
+         "scripts/ubuntu-bootstrap-puppet.sh"
+         ],
+      "type": "shell"
+    }, 
+    {
+      "type": "puppet-masterless",
+   	  "manifest_file": "../bfair_vagrant_puppet/puppet/manifests/bfair.pp",
+      "manifest_dir":  "../bfair_vagrant_puppet/puppet/manifests",
+      "hiera_config_path": "../bfair_vagrant_puppet/puppet/hiera.yaml"
+	}
+    
+  ]
+}
+
