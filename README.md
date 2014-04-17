@@ -10,7 +10,7 @@ MongoDB and Puppet are provided by shell scripts. The following templates are co
 * vbox-vagrant.json: Runs VirtualBox builder with vagrant post-processor and shell provisioning. Serves as development environment
 
 
- Production
+Production
  ----
  
  Starts AWS deployment: 
@@ -20,8 +20,8 @@ packer build -var-file=packerconfig.json aws-full-provisioning.json
 ```
 
 
-Production
- ----
+Development
+----
  
  Starts generating the Vagrant box: 
  
