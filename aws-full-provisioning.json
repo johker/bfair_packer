@@ -12,7 +12,7 @@
     	  "secret_key": "{{user `aws_secret_key`}}",
     	  "region": "eu-west-1",
     	  "source_ami": "ami-cd6c97ba",
-    	  "instance_type": "t1.micro",
+    	  "instance_type": "m1.small",
     	  "ssh_username": "ubuntu",
     	  "ami_name": "bfair-packer-aws {{timestamp}}",
     	  "tags": {
@@ -22,10 +22,20 @@
     	}
   ],
   "provisioners": [
+	{
+		"type": "file",
+		"source": "../bfair_vagrant_puppet/puppet/hieradata",
+		"destination": "/tmp"
+	},
+	{
+		"type": "file",
+		"source": "../bfair_vagrant_puppet/software",
+		"destination": "/tmp"
+	},
      {
     	 "execute_command": "echo 'vagrant' | sudo -S sh '{{ .Path }}'",
     	 "scripts": [
-         "scripts/vagrant-ubuntu-update.sh",
+         "scripts/aws-ubuntu-update.sh",
          "scripts/ubuntu-mongodb.sh", 
          "scripts/ubuntu-bootstrap-puppet.sh"
          ],
